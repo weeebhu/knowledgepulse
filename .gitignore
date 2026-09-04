@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.venv/
+venv/
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Python tooling
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Data
+datasets/raw/*
+!datasets/raw/.gitkeep
+
+datasets/processed/*
+!datasets/processed/.gitkeep
+
+# Logs
+*.log
+
+# Coverage
+htmlcov/
+.coverage
+
+# Build
+dist/
+build/
+*.egg-info/
