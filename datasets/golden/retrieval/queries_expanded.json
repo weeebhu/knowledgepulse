@@ -1,0 +1,176 @@
+[
+  {
+    "query_id": "Q001",
+    "query": "How often must Tier-1 production databases generate incremental backups?",
+    "relevant_chunk_ids": [
+      "DOC-003-P001-C000"
+    ]
+  },
+  {
+    "query_id": "Q002",
+    "query": "How often must a full recoverable database backup be generated?",
+    "relevant_chunk_ids": [
+      "DOC-003-P001-C000"
+    ]
+  },
+  {
+    "query_id": "Q003",
+    "query": "What is the minimum retention period for production database backups?",
+    "relevant_chunk_ids": [
+      "DOC-003-P001-C001"
+    ]
+  },
+  {
+    "query_id": "Q004",
+    "query": "How long are disaster recovery snapshots maintained?",
+    "relevant_chunk_ids": [
+      "DOC-004-P001-C001"
+    ]
+  },
+  {
+    "query_id": "Q005",
+    "query": "What must be verified before restoring customer-facing workloads?",
+    "relevant_chunk_ids": [
+      "DOC-004-P001-C001",
+      "DOC-004-P001-C002"
+    ]
+  },
+  {
+    "query_id": "Q006",
+    "query": "What approval is required before a production deployment proceeds?",
+    "relevant_chunk_ids": [
+      "DOC-001-P001-C002"
+    ]
+  },
+  {
+    "query_id": "Q007",
+    "query": "What does the release manager review before approving a production rollout?",
+    "relevant_chunk_ids": [
+      "DOC-001-P001-C001"
+    ]
+  },
+  {
+    "query_id": "Q008",
+    "query": "What conditions must be satisfied before a standard production release?",
+    "relevant_chunk_ids": [
+      "DOC-001-P001-C000",
+      "DOC-001-P001-C001"
+    ]
+  },
+  {
+    "query_id": "Q009",
+    "query": "Is manual release-manager approval required for the standardized GitHub Actions production workflow?",
+    "relevant_chunk_ids": [
+      "DOC-002-P001-C001"
+    ]
+  },
+  {
+    "query_id": "Q010",
+    "query": "What is the primary source used to restore persistent production data?",
+    "relevant_chunk_ids": [
+      "DOC-004-P001-C000"
+    ]
+  },
+  {
+    "query_id": "Q011",
+    "query": "What must happen after a production workload has been restored?",
+    "relevant_chunk_ids": [
+      "DOC-004-P001-C002"
+    ]
+  },
+  {
+    "query_id": "Q012",
+    "query": "How must backup artifacts containing customer data be protected?",
+    "relevant_chunk_ids": [
+      "DOC-003-P001-C001"
+    ]
+  },
+  {
+    "query_id": "Q013",
+    "query": "Which CI/CD platform replaced Jenkins for standard application delivery?",
+    "relevant_chunk_ids": [
+      "DOC-002-P001-C000"
+    ]
+  },
+  {
+    "query_id": "Q014",
+    "query": "Under what conditions can a GitHub Actions production release proceed automatically?",
+    "relevant_chunk_ids": [
+      "DOC-002-P001-C000",
+      "DOC-002-P001-C001"
+    ]
+  },
+  {
+    "query_id": "Q015",
+    "query": "Which services may continue using legacy Jenkins pipelines?",
+    "relevant_chunk_ids": [
+      "DOC-002-P001-C001"
+    ]
+  },
+  {
+    "query_id": "Q016",
+    "query": "How can teams roll back a standardized GitHub Actions deployment?",
+    "relevant_chunk_ids": [
+      "DOC-002-P001-C002"
+    ]
+  },
+  {
+    "query_id": "Q017",
+    "query": "How frequently must Tier-1 databases undergo restoration testing?",
+    "relevant_chunk_ids": [
+      "DOC-003-P001-C002"
+    ]
+  },
+  {
+    "query_id": "Q018",
+    "query": "What happens when a database backup operation fails?",
+    "relevant_chunk_ids": [
+      "DOC-003-P001-C001"
+    ]
+  },
+  {
+    "query_id": "Q019",
+    "query": "What security controls apply to backup artifacts containing customer data?",
+    "relevant_chunk_ids": [
+      "DOC-003-P001-C001"
+    ]
+  },
+  {
+    "query_id": "Q020",
+    "query": "What determines which recovery point an operator should select?",
+    "relevant_chunk_ids": [
+      "DOC-004-P001-C000",
+      "DOC-004-P001-C001"
+    ]
+  },
+  {
+    "query_id": "Q021",
+    "query": "Who must authorize the recovery of customer-facing workloads?",
+    "relevant_chunk_ids": [
+      "DOC-004-P001-C001",
+      "DOC-004-P001-C002"
+    ]
+  },
+  {
+    "query_id": "Q022",
+    "query": "What checks must pass before normal traffic resumes after disaster recovery?",
+    "relevant_chunk_ids": [
+      "DOC-004-P001-C002"
+    ]
+  },
+  {
+    "query_id": "Q023",
+    "query": "What evidence must the release manager review before approving a rollout?",
+    "relevant_chunk_ids": [
+      "DOC-001-P001-C001",
+      "DOC-001-P001-C002"
+    ]
+  },
+  {
+    "query_id": "Q024",
+    "query": "What documentation is required for an expedited emergency deployment?",
+    "relevant_chunk_ids": [
+      "DOC-001-P001-C002"
+    ]
+  }
+]

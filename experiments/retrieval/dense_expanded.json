@@ -1,0 +1,427 @@
+{
+  "retrieval_strategy": "dense",
+  "embedding_model": "BAAI/bge-small-en-v1.5",
+  "chunk_size": 500,
+  "top_k": 5,
+  "query_count": 24,
+  "recall_at_5": 0.9791666666666666,
+  "precision_at_5": 0.2416666666666667,
+  "mrr": 0.8680555555555555,
+  "ndcg_at_5": 0.8921991848729186,
+  "query_results": [
+    {
+      "query_id": "Q001",
+      "relevant_chunk_ids": [
+        "DOC-003-P001-C000"
+      ],
+      "retrieved_chunk_ids": [
+        "DOC-003-P001-C000",
+        "DOC-003-P001-C001",
+        "DOC-003-P001-C002",
+        "DOC-002-P001-C002",
+        "DOC-004-P001-C001"
+      ],
+      "recall_at_5": 1.0,
+      "precision_at_5": 0.2,
+      "reciprocal_rank": 1.0,
+      "ndcg_at_5": 1.0
+    },
+    {
+      "query_id": "Q002",
+      "relevant_chunk_ids": [
+        "DOC-003-P001-C000"
+      ],
+      "retrieved_chunk_ids": [
+        "DOC-003-P001-C000",
+        "DOC-003-P001-C001",
+        "DOC-003-P001-C002",
+        "DOC-004-P001-C001",
+        "DOC-004-P001-C000"
+      ],
+      "recall_at_5": 1.0,
+      "precision_at_5": 0.2,
+      "reciprocal_rank": 1.0,
+      "ndcg_at_5": 1.0
+    },
+    {
+      "query_id": "Q003",
+      "relevant_chunk_ids": [
+        "DOC-003-P001-C001"
+      ],
+      "retrieved_chunk_ids": [
+        "DOC-003-P001-C000",
+        "DOC-003-P001-C001",
+        "DOC-004-P001-C001",
+        "DOC-003-P001-C002",
+        "DOC-002-P001-C002"
+      ],
+      "recall_at_5": 1.0,
+      "precision_at_5": 0.2,
+      "reciprocal_rank": 0.5,
+      "ndcg_at_5": 0.6309297535714575
+    },
+    {
+      "query_id": "Q004",
+      "relevant_chunk_ids": [
+        "DOC-004-P001-C001"
+      ],
+      "retrieved_chunk_ids": [
+        "DOC-004-P001-C001",
+        "DOC-003-P001-C001",
+        "DOC-004-P001-C000",
+        "DOC-003-P001-C000",
+        "DOC-003-P001-C002"
+      ],
+      "recall_at_5": 1.0,
+      "precision_at_5": 0.2,
+      "reciprocal_rank": 1.0,
+      "ndcg_at_5": 1.0
+    },
+    {
+      "query_id": "Q005",
+      "relevant_chunk_ids": [
+        "DOC-004-P001-C001",
+        "DOC-004-P001-C002"
+      ],
+      "retrieved_chunk_ids": [
+        "DOC-004-P001-C002",
+        "DOC-003-P001-C001",
+        "DOC-004-P001-C001",
+        "DOC-003-P001-C002",
+        "DOC-002-P001-C002"
+      ],
+      "recall_at_5": 1.0,
+      "precision_at_5": 0.4,
+      "reciprocal_rank": 1.0,
+      "ndcg_at_5": 0.9197207891481876
+    },
+    {
+      "query_id": "Q006",
+      "relevant_chunk_ids": [
+        "DOC-001-P001-C002"
+      ],
+      "retrieved_chunk_ids": [
+        "DOC-001-P001-C002",
+        "DOC-002-P001-C001",
+        "DOC-001-P001-C001",
+        "DOC-001-P001-C000",
+        "DOC-003-P001-C001"
+      ],
+      "recall_at_5": 1.0,
+      "precision_at_5": 0.2,
+      "reciprocal_rank": 1.0,
+      "ndcg_at_5": 1.0
+    },
+    {
+      "query_id": "Q007",
+      "relevant_chunk_ids": [
+        "DOC-001-P001-C001"
+      ],
+      "retrieved_chunk_ids": [
+        "DOC-001-P001-C001",
+        "DOC-001-P001-C002",
+        "DOC-002-P001-C002",
+        "DOC-002-P001-C001",
+        "DOC-002-P001-C000"
+      ],
+      "recall_at_5": 1.0,
+      "precision_at_5": 0.2,
+      "reciprocal_rank": 1.0,
+      "ndcg_at_5": 1.0
+    },
+    {
+      "query_id": "Q008",
+      "relevant_chunk_ids": [
+        "DOC-001-P001-C000",
+        "DOC-001-P001-C001"
+      ],
+      "retrieved_chunk_ids": [
+        "DOC-001-P001-C000",
+        "DOC-001-P001-C001",
+        "DOC-001-P001-C002",
+        "DOC-002-P001-C001",
+        "DOC-003-P001-C001"
+      ],
+      "recall_at_5": 1.0,
+      "precision_at_5": 0.4,
+      "reciprocal_rank": 1.0,
+      "ndcg_at_5": 1.0
+    },
+    {
+      "query_id": "Q009",
+      "relevant_chunk_ids": [
+        "DOC-002-P001-C001"
+      ],
+      "retrieved_chunk_ids": [
+        "DOC-002-P001-C002",
+        "DOC-002-P001-C001",
+        "DOC-002-P001-C000",
+        "DOC-001-P001-C001",
+        "DOC-001-P001-C002"
+      ],
+      "recall_at_5": 1.0,
+      "precision_at_5": 0.2,
+      "reciprocal_rank": 0.5,
+      "ndcg_at_5": 0.6309297535714575
+    },
+    {
+      "query_id": "Q010",
+      "relevant_chunk_ids": [
+        "DOC-004-P001-C000"
+      ],
+      "retrieved_chunk_ids": [
+        "DOC-004-P001-C000",
+        "DOC-003-P001-C000",
+        "DOC-003-P001-C001",
+        "DOC-004-P001-C001",
+        "DOC-001-P001-C000"
+      ],
+      "recall_at_5": 1.0,
+      "precision_at_5": 0.2,
+      "reciprocal_rank": 1.0,
+      "ndcg_at_5": 1.0
+    },
+    {
+      "query_id": "Q011",
+      "relevant_chunk_ids": [
+        "DOC-004-P001-C002"
+      ],
+      "retrieved_chunk_ids": [
+        "DOC-003-P001-C001",
+        "DOC-001-P001-C002",
+        "DOC-004-P001-C002",
+        "DOC-003-P001-C000",
+        "DOC-002-P001-C002"
+      ],
+      "recall_at_5": 1.0,
+      "precision_at_5": 0.2,
+      "reciprocal_rank": 0.3333333333333333,
+      "ndcg_at_5": 0.5
+    },
+    {
+      "query_id": "Q012",
+      "relevant_chunk_ids": [
+        "DOC-003-P001-C001"
+      ],
+      "retrieved_chunk_ids": [
+        "DOC-003-P001-C001",
+        "DOC-003-P001-C000",
+        "DOC-004-P001-C002",
+        "DOC-004-P001-C001",
+        "DOC-003-P001-C002"
+      ],
+      "recall_at_5": 1.0,
+      "precision_at_5": 0.2,
+      "reciprocal_rank": 1.0,
+      "ndcg_at_5": 1.0
+    },
+    {
+      "query_id": "Q013",
+      "relevant_chunk_ids": [
+        "DOC-002-P001-C000"
+      ],
+      "retrieved_chunk_ids": [
+        "DOC-002-P001-C000",
+        "DOC-001-P001-C000",
+        "DOC-001-P001-C001",
+        "DOC-002-P001-C001",
+        "DOC-002-P001-C002"
+      ],
+      "recall_at_5": 1.0,
+      "precision_at_5": 0.2,
+      "reciprocal_rank": 1.0,
+      "ndcg_at_5": 1.0
+    },
+    {
+      "query_id": "Q014",
+      "relevant_chunk_ids": [
+        "DOC-002-P001-C000",
+        "DOC-002-P001-C001"
+      ],
+      "retrieved_chunk_ids": [
+        "DOC-002-P001-C002",
+        "DOC-002-P001-C000",
+        "DOC-001-P001-C001",
+        "DOC-001-P001-C002",
+        "DOC-001-P001-C000"
+      ],
+      "recall_at_5": 0.5,
+      "precision_at_5": 0.2,
+      "reciprocal_rank": 0.5,
+      "ndcg_at_5": 0.38685280723454163
+    },
+    {
+      "query_id": "Q015",
+      "relevant_chunk_ids": [
+        "DOC-002-P001-C001"
+      ],
+      "retrieved_chunk_ids": [
+        "DOC-002-P001-C001",
+        "DOC-001-P001-C001",
+        "DOC-002-P001-C000",
+        "DOC-002-P001-C002",
+        "DOC-003-P001-C001"
+      ],
+      "recall_at_5": 1.0,
+      "precision_at_5": 0.2,
+      "reciprocal_rank": 1.0,
+      "ndcg_at_5": 1.0
+    },
+    {
+      "query_id": "Q016",
+      "relevant_chunk_ids": [
+        "DOC-002-P001-C002"
+      ],
+      "retrieved_chunk_ids": [
+        "DOC-002-P001-C002",
+        "DOC-002-P001-C000",
+        "DOC-001-P001-C001",
+        "DOC-001-P001-C002",
+        "DOC-002-P001-C001"
+      ],
+      "recall_at_5": 1.0,
+      "precision_at_5": 0.2,
+      "reciprocal_rank": 1.0,
+      "ndcg_at_5": 1.0
+    },
+    {
+      "query_id": "Q017",
+      "relevant_chunk_ids": [
+        "DOC-003-P001-C002"
+      ],
+      "retrieved_chunk_ids": [
+        "DOC-003-P001-C002",
+        "DOC-003-P001-C000",
+        "DOC-003-P001-C001",
+        "DOC-004-P001-C002",
+        "DOC-004-P001-C001"
+      ],
+      "recall_at_5": 1.0,
+      "precision_at_5": 0.2,
+      "reciprocal_rank": 1.0,
+      "ndcg_at_5": 1.0
+    },
+    {
+      "query_id": "Q018",
+      "relevant_chunk_ids": [
+        "DOC-003-P001-C001"
+      ],
+      "retrieved_chunk_ids": [
+        "DOC-003-P001-C001",
+        "DOC-003-P001-C000",
+        "DOC-004-P001-C001",
+        "DOC-003-P001-C002",
+        "DOC-004-P001-C002"
+      ],
+      "recall_at_5": 1.0,
+      "precision_at_5": 0.2,
+      "reciprocal_rank": 1.0,
+      "ndcg_at_5": 1.0
+    },
+    {
+      "query_id": "Q019",
+      "relevant_chunk_ids": [
+        "DOC-003-P001-C001"
+      ],
+      "retrieved_chunk_ids": [
+        "DOC-003-P001-C001",
+        "DOC-004-P001-C002",
+        "DOC-003-P001-C000",
+        "DOC-004-P001-C001",
+        "DOC-001-P001-C001"
+      ],
+      "recall_at_5": 1.0,
+      "precision_at_5": 0.2,
+      "reciprocal_rank": 1.0,
+      "ndcg_at_5": 1.0
+    },
+    {
+      "query_id": "Q020",
+      "relevant_chunk_ids": [
+        "DOC-004-P001-C000",
+        "DOC-004-P001-C001"
+      ],
+      "retrieved_chunk_ids": [
+        "DOC-004-P001-C002",
+        "DOC-004-P001-C001",
+        "DOC-004-P001-C000",
+        "DOC-003-P001-C000",
+        "DOC-001-P001-C001"
+      ],
+      "recall_at_5": 1.0,
+      "precision_at_5": 0.4,
+      "reciprocal_rank": 0.5,
+      "ndcg_at_5": 0.6934264036172708
+    },
+    {
+      "query_id": "Q021",
+      "relevant_chunk_ids": [
+        "DOC-004-P001-C001",
+        "DOC-004-P001-C002"
+      ],
+      "retrieved_chunk_ids": [
+        "DOC-003-P001-C001",
+        "DOC-004-P001-C002",
+        "DOC-003-P001-C000",
+        "DOC-004-P001-C001",
+        "DOC-001-P001-C002"
+      ],
+      "recall_at_5": 1.0,
+      "precision_at_5": 0.4,
+      "reciprocal_rank": 0.5,
+      "ndcg_at_5": 0.6509209298071326
+    },
+    {
+      "query_id": "Q022",
+      "relevant_chunk_ids": [
+        "DOC-004-P001-C002"
+      ],
+      "retrieved_chunk_ids": [
+        "DOC-004-P001-C002",
+        "DOC-004-P001-C001",
+        "DOC-004-P001-C000",
+        "DOC-003-P001-C001",
+        "DOC-003-P001-C002"
+      ],
+      "recall_at_5": 1.0,
+      "precision_at_5": 0.2,
+      "reciprocal_rank": 1.0,
+      "ndcg_at_5": 1.0
+    },
+    {
+      "query_id": "Q023",
+      "relevant_chunk_ids": [
+        "DOC-001-P001-C001",
+        "DOC-001-P001-C002"
+      ],
+      "retrieved_chunk_ids": [
+        "DOC-001-P001-C001",
+        "DOC-001-P001-C002",
+        "DOC-002-P001-C001",
+        "DOC-002-P001-C002",
+        "DOC-004-P001-C002"
+      ],
+      "recall_at_5": 1.0,
+      "precision_at_5": 0.4,
+      "reciprocal_rank": 1.0,
+      "ndcg_at_5": 1.0
+    },
+    {
+      "query_id": "Q024",
+      "relevant_chunk_ids": [
+        "DOC-001-P001-C002"
+      ],
+      "retrieved_chunk_ids": [
+        "DOC-001-P001-C002",
+        "DOC-001-P001-C001",
+        "DOC-002-P001-C001",
+        "DOC-002-P001-C002",
+        "DOC-003-P001-C001"
+      ],
+      "recall_at_5": 1.0,
+      "precision_at_5": 0.2,
+      "reciprocal_rank": 1.0,
+      "ndcg_at_5": 1.0
+    }
+  ]
+}

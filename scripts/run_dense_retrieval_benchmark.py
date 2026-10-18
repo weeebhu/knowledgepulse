@@ -1,3 +1,4 @@
+import argparse
 import json
 from pathlib import Path
 
@@ -20,9 +21,27 @@ DOCUMENT_PATHS = [
 ]
 
 
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--dataset",
+        type=Path,
+        default=DATASET_PATH,
+        help="Path to the retrieval benchmark dataset JSON.",
+    )
+    parser.add_argument(
+        "--output",
+        type=Path,
+        default=RESULTS_PATH,
+        help="Path to write the benchmark results JSON.",
+    )
+    return parser.parse_args()
+
+
 def main() -> None:
+    args = parse_args()
     print("Loading benchmark queries...")
-    queries = load_benchmark_queries(DATASET_PATH)
+    queries = load_benchmark_queries(args.dataset)
 
     print("Loading embedding model...")
     embedding_provider = SentenceTransformerProvider()
@@ -103,14 +122,13 @@ def main() -> None:
         for query_result in result.query_results
     ]
 
-    RESULTS_DIR.mkdir(parents=True, exist_ok=True)
-
-    RESULTS_PATH.write_text(
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    args.output.write_text(
         json.dumps(output, indent=2) + "\n",
         encoding="utf-8",
     )
 
-    print(f"\nBaseline saved to: {RESULTS_PATH}")
+    print(f"\nResults saved to: {args.output}")
 
 
 if __name__ == "__main__":
