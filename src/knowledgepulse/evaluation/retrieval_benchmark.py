@@ -40,10 +40,14 @@ def run_retrieval_benchmark(
     retriever: Callable[[str, int], list[str]],
     top_k: int,
 ) -> RetrievalBenchmarkResult:
-    """Run retrieval evaluation across benchmark queries."""
+    """Run a validated, cutoff-consistent retrieval evaluation."""
 
     if top_k <= 0:
         raise ValueError("top_k must be greater than zero")
+
+    query_ids = [query.query_id for query in queries]
+    if len(query_ids) != len(set(query_ids)):
+        raise ValueError("Benchmark query IDs must be unique")
 
     if not queries:
         return RetrievalBenchmarkResult(
@@ -58,35 +62,26 @@ def run_retrieval_benchmark(
     query_results: list[RetrievalQueryResult] = []
 
     for benchmark_query in queries:
-        retrieved_chunk_ids = retriever(
-            benchmark_query.query,
-            top_k,
-        )
+        retrieved_chunk_ids = retriever(benchmark_query.query, top_k)
+        if any(not chunk_id.strip() for chunk_id in retrieved_chunk_ids):
+            raise ValueError(
+                f"Retriever returned an empty chunk ID for query "
+                f"'{benchmark_query.query_id}'"
+            )
+        if len(retrieved_chunk_ids) != len(set(retrieved_chunk_ids)):
+            raise ValueError(
+                f"Retriever returned duplicate chunk IDs for query "
+                f"'{benchmark_query.query_id}'"
+            )
 
+        # Every metric, including reciprocal rank, must use the same cutoff.
+        retrieved_chunk_ids = retrieved_chunk_ids[:top_k]
         relevant_chunk_ids = set(benchmark_query.relevant_chunk_ids)
 
-        recall_score = recall_at_k(
-            relevant_chunk_ids,
-            retrieved_chunk_ids,
-            top_k,
-        )
-
-        precision_score = precision_at_k(
-            relevant_chunk_ids,
-            retrieved_chunk_ids,
-            top_k,
-        )
-
-        reciprocal_rank_score = reciprocal_rank(
-            relevant_chunk_ids,
-            retrieved_chunk_ids,
-        )
-
-        ndcg_score = ndcg_at_k(
-            relevant_chunk_ids,
-            retrieved_chunk_ids,
-            top_k,
-        )
+        recall_score = recall_at_k(relevant_chunk_ids, retrieved_chunk_ids, top_k)
+        precision_score = precision_at_k(relevant_chunk_ids, retrieved_chunk_ids, top_k)
+        reciprocal_rank_score = reciprocal_rank(relevant_chunk_ids, retrieved_chunk_ids)
+        ndcg_score = ndcg_at_k(relevant_chunk_ids, retrieved_chunk_ids, top_k)
 
         query_results.append(
             RetrievalQueryResult(
@@ -100,11 +95,12 @@ def run_retrieval_benchmark(
             )
         )
 
+    result_count = len(query_results)
     return RetrievalBenchmarkResult(
-        query_count=len(query_results),
-        recall_at_k=sum(result.recall_at_k for result in query_results) / len(query_results),
-        precision_at_k=sum(result.precision_at_k for result in query_results) / len(query_results),
-        mrr=sum(result.reciprocal_rank for result in query_results) / len(query_results),
-        ndcg_at_k=sum(result.ndcg_at_k for result in query_results) / len(query_results),
+        query_count=result_count,
+        recall_at_k=sum(result.recall_at_k for result in query_results) / result_count,
+        precision_at_k=sum(result.precision_at_k for result in query_results) / result_count,
+        mrr=sum(result.reciprocal_rank for result in query_results) / result_count,
+        ndcg_at_k=sum(result.ndcg_at_k for result in query_results) / result_count,
         query_results=query_results,
     )
