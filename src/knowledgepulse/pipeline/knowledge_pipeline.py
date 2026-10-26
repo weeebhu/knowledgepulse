@@ -28,9 +28,7 @@ class KnowledgePipeline:
         self,
         document: IngestedDocument,
     ) -> None:
-        """Chunk, embed, and index a document."""
-
-        self.vector_store.delete_by_document_id(document.document_id)
+        """Chunk, embed, and atomically replace a document's index."""
 
         chunks = chunk_document(
             document=document,
@@ -42,7 +40,12 @@ class KnowledgePipeline:
             provider=self.embedding_provider,
         )
 
-        self.vector_store.add(embedded_chunks)
+        # Do not remove the current index until the replacement has been
+        # completely prepared. The store validates and swaps the new state.
+        self.vector_store.replace_document(
+            document_id=document.document_id,
+            chunks=embedded_chunks,
+        )
 
     def index_documents(
         self,
