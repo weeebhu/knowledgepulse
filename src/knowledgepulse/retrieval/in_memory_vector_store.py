@@ -55,7 +55,7 @@ class InMemoryVectorStore(VectorStore):
     def _validate_unique_chunk_ids(chunks: list[EmbeddedChunk]) -> None:
         chunk_ids = [chunk.chunk_id for chunk in chunks]
         if len(chunk_ids) != len(set(chunk_ids)):
-            raise ValueError("Duplicate chunk ID")
+            raise ValueError("Chunk ID already exists")
 
     def search(
         self,
