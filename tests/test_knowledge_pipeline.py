@@ -153,3 +153,87 @@ def test_failed_reindex_preserves_the_previous_document_index() -> None:
 
     assert len(results) == 1
     assert results[0].chunk.text == "Original deployment policy."
+
+
+
+def test_pipeline_search_uses_lexical_candidates_and_preserves_provenance() -> None:
+    pipeline = KnowledgePipeline(
+        embedding_provider=FakeEmbeddingProvider(),
+        max_chunk_size=100,
+    )
+    pipeline.index_documents(
+        [
+            IngestedDocument(
+                document_id="DOC-001",
+                source_path="DOC-001.pdf",
+                pages=[DocumentPage(page_number=1, text="Database backups run every six hours.")],
+            ),
+            IngestedDocument(
+                document_id="DOC-002",
+                source_path="DOC-002.pdf",
+                pages=[DocumentPage(page_number=3, text="Release approval is required for production.")],
+            ),
+        ]
+    )
+
+    results = pipeline.search("database backups", top_k=2)
+
+    assert results
+    assert results[0].chunk.document_id == "DOC-001"
+    assert results[0].chunk.page_number == 1
+    assert results[0].score_type == "reciprocal_rank_fusion"
+    assert 0 < results[0].score < 1
+
+
+def test_reindex_updates_dense_and_lexical_indexes_together() -> None:
+    pipeline = KnowledgePipeline(
+        embedding_provider=FakeEmbeddingProvider(),
+        max_chunk_size=100,
+    )
+    original = IngestedDocument(
+        document_id="DOC-001",
+        source_path="DOC-001.pdf",
+        pages=[DocumentPage(page_number=1, text="Legacy database backup policy.")],
+    )
+    replacement = IngestedDocument(
+        document_id="DOC-001",
+        source_path="DOC-001.pdf",
+        pages=[DocumentPage(page_number=2, text="New disaster recovery procedure.")],
+    )
+
+    pipeline.index_document(original)
+    pipeline.index_document(replacement)
+
+    assert pipeline.bm25_retriever.search("legacy database", top_k=5) == []
+    assert len(pipeline.bm25_retriever.search("disaster recovery", top_k=5)) == 1
+    results = pipeline.search("disaster recovery", top_k=5)
+    assert len(results) == 1
+    assert results[0].chunk.text == "New disaster recovery procedure."
+    assert results[0].chunk.page_number == 2
+
+
+def test_failed_reindex_preserves_both_retrieval_indexes() -> None:
+    provider = FailingEmbeddingProvider()
+    pipeline = KnowledgePipeline(embedding_provider=provider, max_chunk_size=100)
+    original = IngestedDocument(
+        document_id="DOC-001",
+        source_path="DOC-001.pdf",
+        pages=[DocumentPage(page_number=1, text="Original database retention policy.")],
+    )
+    replacement = IngestedDocument(
+        document_id="DOC-001",
+        source_path="DOC-001.pdf",
+        pages=[DocumentPage(page_number=1, text="Replacement disaster recovery policy.")],
+    )
+    pipeline.index_document(original)
+    provider.fail = True
+
+    with pytest.raises(RuntimeError, match="Embedding service unavailable"):
+        pipeline.index_document(replacement)
+
+    provider.fail = False
+    assert len(pipeline.bm25_retriever.search("database retention", top_k=5)) == 1
+    assert pipeline.bm25_retriever.search("disaster recovery", top_k=5) == []
+    assert pipeline.search("database retention", top_k=5)[0].chunk.text == (
+        "Original database retention policy."
+    )
