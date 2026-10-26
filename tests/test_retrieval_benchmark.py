@@ -83,3 +83,56 @@ def test_run_retrieval_benchmark_returns_per_query_results() -> None:
     assert query_result.precision_at_k == 1.0
     assert query_result.reciprocal_rank == 1.0
     assert query_result.ndcg_at_k == 1.0
+
+
+def test_run_retrieval_benchmark_applies_top_k_to_reciprocal_rank() -> None:
+    queries = load_benchmark_queries(DATASET_PATH)
+
+    result = run_retrieval_benchmark(
+        queries=[queries[0]],
+        retriever=lambda query, top_k: [
+            "DOC-002-P001-C000",
+            "DOC-002-P001-C001",
+            "DOC-003-P001-C000",
+        ],
+        top_k=2,
+    )
+
+    assert result.query_results[0].retrieved_chunk_ids == [
+        "DOC-002-P001-C000",
+        "DOC-002-P001-C001",
+    ]
+    assert result.mrr == 0.0
+
+
+def test_run_retrieval_benchmark_rejects_duplicate_query_ids() -> None:
+    queries = load_benchmark_queries(DATASET_PATH)
+
+    with pytest.raises(ValueError, match="Benchmark query IDs must be unique"):
+        run_retrieval_benchmark(
+            queries=[queries[0], queries[0]],
+            retriever=lambda query, top_k: [],
+            top_k=5,
+        )
+
+
+def test_run_retrieval_benchmark_rejects_duplicate_retrieved_ids() -> None:
+    queries = load_benchmark_queries(DATASET_PATH)
+
+    with pytest.raises(ValueError, match="duplicate chunk IDs"):
+        run_retrieval_benchmark(
+            queries=[queries[0]],
+            retriever=lambda query, top_k: ["chunk-1", "chunk-1"],
+            top_k=5,
+        )
+
+
+def test_run_retrieval_benchmark_rejects_empty_retrieved_ids() -> None:
+    queries = load_benchmark_queries(DATASET_PATH)
+
+    with pytest.raises(ValueError, match="empty chunk ID"):
+        run_retrieval_benchmark(
+            queries=[queries[0]],
+            retriever=lambda query, top_k: ["chunk-1", "  "],
+            top_k=5,
+        )
