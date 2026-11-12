@@ -7,7 +7,7 @@ from knowledgepulse.embeddings.sentence_transformer import SentenceTransformerPr
 from knowledgepulse.embeddings.service import embed_chunks
 from knowledgepulse.evaluation.retrieval_benchmark import run_retrieval_benchmark
 from knowledgepulse.ingestion.chunking import chunk_document
-from knowledgepulse.ingestion.pdf import ingest_pdf
+from knowledgepulse.ingestion.corpus_ingestion import ingest_directory
 from knowledgepulse.retrieval.in_memory_vector_store import InMemoryVectorStore
 
 GOLDEN_DIR = Path("datasets/golden")
@@ -15,13 +15,6 @@ DATASET_PATH = GOLDEN_DIR / "retrieval" / "queries.json"
 RESULTS_DIR = Path("experiments/retrieval")
 RESULTS_PATH = RESULTS_DIR / "dense_baseline.json"
 
-DOCUMENT_PATHS = [
-    GOLDEN_DIR / "DOC-001_Production_Deployment_Runbook.pdf",
-    GOLDEN_DIR / "DOC-002_CICD_Pipeline_Migration_Guide.pdf",
-    GOLDEN_DIR / "DOC-003_Database_Backup_and_Retention_Policy.pdf",
-    GOLDEN_DIR / "DOC-004_Disaster_Recovery_Runbook.pdf",
-]
-DOCUMENT_IDS = ["DOC-001", "DOC-002", "DOC-003", "DOC-004"]
 CHUNK_SIZE = 500
 TOP_K = 5
 
@@ -41,10 +34,7 @@ def main() -> None:
     embedding_provider = SentenceTransformerProvider()
 
     print("Ingesting and chunking golden documents...")
-    documents = [
-        ingest_pdf(path, document_id)
-        for path, document_id in zip(DOCUMENT_PATHS, DOCUMENT_IDS, strict=True)
-    ]
+    documents = ingest_directory(GOLDEN_DIR).documents
     chunks = [
         chunk
         for document in documents
