@@ -85,6 +85,8 @@ def main() -> None:
         "top_k": TOP_K,
         "indexed_chunk_count": len(chunks),
         "query_count": result.query_count,
+        "answerable_query_count": result.answerable_query_count,
+        "unanswerable_query_count": result.unanswerable_query_count,
         "recall_at_5": result.recall_at_k,
         "precision_at_5": result.precision_at_k,
         "mrr": result.mrr,
