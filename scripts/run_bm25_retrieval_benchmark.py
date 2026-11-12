@@ -91,9 +91,20 @@ def main() -> None:
         "precision_at_5": result.precision_at_k,
         "mrr": result.mrr,
         "ndcg_at_5": result.ndcg_at_k,
+        "category_metrics": {
+            category: {
+                "query_count": metrics.query_count,
+                "recall_at_5": metrics.recall_at_k,
+                "precision_at_5": metrics.precision_at_k,
+                "mrr": metrics.mrr,
+                "ndcg_at_5": metrics.ndcg_at_k,
+            }
+            for category, metrics in result.category_metrics.items()
+        },
         "query_results": [
             {
                 "query_id": query_result.query_id,
+                "category": query_result.category,
                 "relevant_chunk_ids": sorted(query_result.relevant_chunk_ids),
                 "retrieved_chunk_ids": query_result.retrieved_chunk_ids,
                 "recall_at_5": query_result.recall_at_k,
