@@ -1,0 +1,10 @@
+Identity and Access Management Standard
+Document ID: DOC-005
+Version: 2.1
+Effective date: 2026-01-15
+
+All workforce access to production systems must use individually assigned accounts. Shared human accounts are prohibited. Multi-factor authentication is mandatory for all privileged accounts and remote access sessions. Service accounts must have a named technical owner, a documented business purpose, and credentials stored in the approved secrets manager.
+
+Privileged access is granted through time-bound elevation. The requester must provide a ticket reference and the system owner must approve the request before access is activated. Standard elevation expires after four hours. Emergency elevation may last up to one hour and requires retrospective review by the security operations manager within one business day.
+
+Access reviews are performed quarterly by each system owner. Reviewers must confirm the user's business need, role alignment, and last-used date. Unused accounts are disabled after 45 days unless an approved exception exists. Departing employees' access must be revoked by the end of their final working day. Contractors' access must have an explicit end date and is disabled automatically when that date is reached.
