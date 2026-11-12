@@ -7,7 +7,7 @@ from knowledgepulse.evaluation.retrieval_metrics import (
     recall_at_k,
     reciprocal_rank,
 )
-from knowledgepulse.models.benchmark import BenchmarkQuery
+from knowledgepulse.models.benchmark import BenchmarkQuery, BenchmarkQueryCategory
 
 
 @dataclass(frozen=True)
@@ -15,11 +15,23 @@ class RetrievalQueryResult:
     """Evaluation metrics for a single answerable benchmark query."""
 
     query_id: str
+    category: BenchmarkQueryCategory
     retrieved_chunk_ids: list[str]
     relevant_chunk_ids: set[str]
     recall_at_k: float
     precision_at_k: float
     reciprocal_rank: float
+    ndcg_at_k: float
+
+
+@dataclass(frozen=True)
+class RetrievalCategoryMetrics:
+    """Mean ranking metrics for one answerable query category."""
+
+    query_count: int
+    recall_at_k: float
+    precision_at_k: float
+    mrr: float
     ndcg_at_k: float
 
 
@@ -35,6 +47,7 @@ class RetrievalBenchmarkResult:
     mrr: float
     ndcg_at_k: float
     query_results: list[RetrievalQueryResult]
+    category_metrics: dict[str, RetrievalCategoryMetrics]
 
 
 def run_retrieval_benchmark(
@@ -42,7 +55,7 @@ def run_retrieval_benchmark(
     retriever: Callable[[str, int], list[str]],
     top_k: int,
 ) -> RetrievalBenchmarkResult:
-    """Evaluate ranking quality only where the dataset contains relevant evidence."""
+    """Evaluate ranking quality and report metrics grouped by query category."""
 
     if top_k <= 0:
         raise ValueError("top_k must be greater than zero")
@@ -76,6 +89,7 @@ def run_retrieval_benchmark(
         query_results.append(
             RetrievalQueryResult(
                 query_id=benchmark_query.query_id,
+                category=benchmark_query.category,
                 retrieved_chunk_ids=retrieved_chunk_ids,
                 relevant_chunk_ids=relevant_chunk_ids,
                 recall_at_k=recall_at_k(relevant_chunk_ids, retrieved_chunk_ids, top_k),
@@ -84,6 +98,21 @@ def run_retrieval_benchmark(
                 ndcg_at_k=ndcg_at_k(relevant_chunk_ids, retrieved_chunk_ids, top_k),
             )
         )
+
+    category_results: dict[str, list[RetrievalQueryResult]] = {}
+    for query_result in query_results:
+        category_results.setdefault(query_result.category, []).append(query_result)
+
+    category_metrics = {
+        category: RetrievalCategoryMetrics(
+            query_count=len(results),
+            recall_at_k=sum(item.recall_at_k for item in results) / len(results),
+            precision_at_k=sum(item.precision_at_k for item in results) / len(results),
+            mrr=sum(item.reciprocal_rank for item in results) / len(results),
+            ndcg_at_k=sum(item.ndcg_at_k for item in results) / len(results),
+        )
+        for category, results in sorted(category_results.items())
+    }
 
     answerable_query_count = len(query_results)
     if not answerable_query_count:
@@ -96,6 +125,7 @@ def run_retrieval_benchmark(
             mrr=0.0,
             ndcg_at_k=0.0,
             query_results=[],
+            category_metrics={},
         )
 
     return RetrievalBenchmarkResult(
@@ -109,4 +139,5 @@ def run_retrieval_benchmark(
         mrr=sum(result.reciprocal_rank for result in query_results) / answerable_query_count,
         ndcg_at_k=sum(result.ndcg_at_k for result in query_results) / answerable_query_count,
         query_results=query_results,
+        category_metrics=category_metrics,
     )
