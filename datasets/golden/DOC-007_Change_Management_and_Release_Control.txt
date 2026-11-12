@@ -1,0 +1,12 @@
+Change Management and Release Control
+Document ID: DOC-007
+Version: 3.0
+Effective date: 2026-02-10
+
+Every production change must be linked to an approved change record containing scope, risk assessment, implementation steps, validation plan, and rollback procedure. The change owner is responsible for keeping the record current. Normal changes require approval from the service owner and the change advisory group before the maintenance window begins.
+
+Standard pre-approved changes may proceed without a meeting of the change advisory group only when the implementation follows the published standard procedure, automated validation is available, and the service owner has approved the change record. A change that deviates from the standard procedure must be reclassified as normal.
+
+Emergency changes may be authorized by the incident commander when necessary to restore a critical service or contain an active security incident. The incident commander must record the reason, scope, and risk acceptance before implementation where practicable. The change advisory group reviews the emergency change by the next business day.
+
+The change owner must attach deployment logs and validation evidence to the change record within one business day of completion. Failed changes must be rolled back using the documented procedure, and the outcome must be recorded. The service owner verifies successful completion before the change record is closed.
