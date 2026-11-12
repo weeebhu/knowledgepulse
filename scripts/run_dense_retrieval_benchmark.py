@@ -91,7 +91,7 @@ def main() -> None:
             {
                 "query_id": item.query_id,
                 "category": item.category,
-                "relevant_chunk_ids: sorted(item.relevant_chunk_ids),
+                "relevant_chunk_ids": sorted(item.relevant_chunk_ids),
                 "retrieved_chunk_ids": item.retrieved_chunk_ids,
                 "recall_at_5": item.recall_at_k,
                 "precision_at_5": item.precision_at_k,
