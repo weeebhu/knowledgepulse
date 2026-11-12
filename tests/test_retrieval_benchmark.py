@@ -26,7 +26,8 @@ def test_run_retrieval_benchmark_returns_metrics() -> None:
     assert result.precision_at_k == 0.0
     assert result.mrr == 0.0
     assert result.ndcg_at_k == 0.0
-    assert result.category_metrics == {"paraphrase": result.category_metrics["paraphrase"]}
+    assert result.category_metrics["paraphrase"].query_count == 12
+    assert result.category_metrics["paraphrase"].recall_at_k == 0.0
 
 
 def test_run_retrieval_benchmark_calculates_metrics() -> None:
@@ -144,7 +145,7 @@ def test_category_metrics_are_aggregated_independently() -> None:
     assert temporal.query_count == 5
     assert temporal.recall_at_k == 1.0
     assert temporal.mrr == 1.0
-    assert paraphrase.query_count == 9
+    assert paraphrase.query_count == 10
     assert paraphrase.recall_at_k == 0.0
     assert paraphrase.mrr == 0.0
     assert sum(item.query_count for item in result.category_metrics.values()) == 24
