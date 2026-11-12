@@ -1,12 +1,26 @@
-from pydantic import BaseModel, field_validator
+from typing import Literal
+
+from pydantic import BaseModel, field_validator, model_validator
+
+
+BenchmarkQueryCategory = Literal[
+    "exact_match",
+    "paraphrase",
+    "multi_document",
+    "temporal",
+    "ambiguous",
+    "unanswerable",
+]
 
 
 class BenchmarkQuery(BaseModel):
-    """A retrieval benchmark query with relevance judgments."""
+    """A retrieval benchmark query with relevance and answerability judgments."""
 
     query_id: str
     query: str
     relevant_chunk_ids: list[str]
+    category: BenchmarkQueryCategory = "paraphrase"
+    is_answerable: bool = True
 
     @field_validator("query_id", "query")
     @classmethod
@@ -24,10 +38,7 @@ class BenchmarkQuery(BaseModel):
         cls,
         value: list[str],
     ) -> list[str]:
-        """Ensure relevant chunk IDs are non-empty and unique."""
-
-        if not value:
-            raise ValueError("At least one relevant chunk is required")
+        """Ensure relevance judgments contain unique, non-empty chunk IDs."""
 
         if any(not chunk_id.strip() for chunk_id in value):
             raise ValueError("Relevant chunk IDs cannot be empty")
@@ -36,3 +47,18 @@ class BenchmarkQuery(BaseModel):
             raise ValueError("Relevant chunk IDs must be unique")
 
         return value
+
+    @model_validator(mode="after")
+    def validate_answerability_judgment(self) -> "BenchmarkQuery":
+        """Keep answerability labels consistent with relevance judgments."""
+
+        if self.is_answerable and not self.relevant_chunk_ids:
+            raise ValueError("Answerable queries require at least one relevant chunk")
+
+        if not self.is_answerable and self.relevant_chunk_ids:
+            raise ValueError("Unanswerable queries cannot have relevant chunks")
+
+        if self.category == "unanswerable" and self.is_answerable:
+            raise ValueError("Queries in the unanswerable category must not be answerable")
+
+        return self

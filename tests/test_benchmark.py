@@ -23,6 +23,8 @@ def test_benchmark_query_stores_query_and_relevant_chunks() -> None:
         == "How often must Tier-1 production databases generate incremental backups?"
     )
     assert benchmark_query.relevant_chunk_ids == ["DOC-003-P001-C000"]
+    assert benchmark_query.category == "paraphrase"
+    assert benchmark_query.is_answerable is True
 
 
 @pytest.mark.parametrize(
@@ -59,6 +61,63 @@ def test_benchmark_query_rejects_duplicate_relevant_chunk_ids() -> None:
                 "DOC-003-P001-C000",
                 "DOC-003-P001-C000",
             ],
+        )
+
+
+def test_benchmark_query_supports_unanswerable_queries() -> None:
+    """An unanswerable query may intentionally have no relevant chunks."""
+
+    benchmark_query = BenchmarkQuery(
+        query_id="Q_UNANSWERABLE",
+        query="What is the office cafeteria's menu on Sundays?",
+        relevant_chunk_ids=[],
+        category="unanswerable",
+        is_answerable=False,
+    )
+
+    assert benchmark_query.relevant_chunk_ids == []
+    assert benchmark_query.category == "unanswerable"
+    assert benchmark_query.is_answerable is False
+
+
+def test_benchmark_query_rejects_answerable_query_without_relevant_chunks() -> None:
+    with pytest.raises(ValueError, match="Answerable queries require"):
+        BenchmarkQuery(
+            query_id="Q001",
+            query="A valid answerable query",
+            relevant_chunk_ids=[],
+        )
+
+
+def test_benchmark_query_rejects_unanswerable_query_with_relevant_chunks() -> None:
+    with pytest.raises(ValueError, match="Unanswerable queries cannot"):
+        BenchmarkQuery(
+            query_id="Q_UNANSWERABLE",
+            query="A query with no supporting evidence",
+            relevant_chunk_ids=["DOC-001-P001-C000"],
+            category="unanswerable",
+            is_answerable=False,
+        )
+
+
+def test_benchmark_query_rejects_inconsistent_unanswerable_category() -> None:
+    with pytest.raises(ValueError, match="unanswerable category"):
+        BenchmarkQuery(
+            query_id="Q001",
+            query="A query incorrectly labeled as unanswerable",
+            relevant_chunk_ids=["DOC-001-P001-C000"],
+            category="unanswerable",
+            is_answerable=True,
+        )
+
+
+def test_benchmark_query_rejects_unknown_category() -> None:
+    with pytest.raises(ValueError):
+        BenchmarkQuery(
+            query_id="Q001",
+            query="A valid query",
+            relevant_chunk_ids=["DOC-001-P001-C000"],
+            category="unsupported",
         )
 
 
