@@ -5,7 +5,7 @@ from pathlib import Path
 from knowledgepulse.benchmarks.dataset import load_benchmark_queries
 from knowledgepulse.evaluation.retrieval_benchmark import run_retrieval_benchmark
 from knowledgepulse.ingestion.chunking import chunk_document
-from knowledgepulse.ingestion.pdf import ingest_pdf
+from knowledgepulse.ingestion.corpus_ingestion import ingest_directory
 from knowledgepulse.retrieval.bm25 import BM25Retriever
 
 GOLDEN_DIR = Path("datasets/golden")
@@ -13,14 +13,6 @@ DATASET_PATH = GOLDEN_DIR / "retrieval" / "queries.json"
 RESULTS_DIR = Path("experiments/retrieval")
 RESULTS_PATH = RESULTS_DIR / "bm25_baseline.json"
 
-DOCUMENT_PATHS = [
-    GOLDEN_DIR / "DOC-001_Production_Deployment_Runbook.pdf",
-    GOLDEN_DIR / "DOC-002_CICD_Pipeline_Migration_Guide.pdf",
-    GOLDEN_DIR / "DOC-003_Database_Backup_and_Retention_Policy.pdf",
-    GOLDEN_DIR / "DOC-004_Disaster_Recovery_Runbook.pdf",
-]
-
-DOCUMENT_IDS = ["DOC-001", "DOC-002", "DOC-003", "DOC-004"]
 CHUNK_SIZE = 500
 TOP_K = 5
 
@@ -48,14 +40,7 @@ def main() -> None:
     queries = load_benchmark_queries(args.dataset)
 
     print("Ingesting golden documents...")
-    documents = [
-        ingest_pdf(path, document_id)
-        for path, document_id in zip(
-            DOCUMENT_PATHS,
-            DOCUMENT_IDS,
-            strict=True,
-        )
-    ]
+    documents = ingest_directory(GOLDEN_DIR).documents
 
     print("Chunking documents...")
     chunks = [
