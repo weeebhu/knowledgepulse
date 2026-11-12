@@ -248,5 +248,98 @@
     "relevant_chunk_ids": [],
     "category": "unanswerable",
     "is_answerable": false
+  },
+  {
+    "query_id": "Q029",
+    "query": "Which authentication controls are mandatory for privileged accounts and remote access?",
+    "relevant_chunk_ids": [
+      "DOC-005-P001-C000"
+    ],
+    "category": "paraphrase",
+    "is_answerable": true
+  },
+  {
+    "query_id": "Q030",
+    "query": "Who approves privileged access and how long does standard elevation last?",
+    "relevant_chunk_ids": [
+      "DOC-005-P001-C001"
+    ],
+    "category": "multi_document",
+    "is_answerable": true
+  },
+  {
+    "query_id": "Q031",
+    "query": "How quickly must a suspected personal-data breach be escalated, and who must be involved?",
+    "relevant_chunk_ids": [
+      "DOC-006-P001-C002"
+    ],
+    "category": "temporal",
+    "is_answerable": true
+  },
+  {
+    "query_id": "Q032",
+    "query": "What controls govern preserving incident evidence and approving external notifications?",
+    "relevant_chunk_ids": [
+      "DOC-006-P001-C001",
+      "DOC-006-P001-C002"
+    ],
+    "category": "multi_document",
+    "is_answerable": true
+  },
+  {
+    "query_id": "Q033",
+    "query": "What approvals are required before a normal production change begins?",
+    "relevant_chunk_ids": [
+      "DOC-007-P001-C000"
+    ],
+    "category": "exact_match",
+    "is_answerable": true
+  },
+  {
+    "query_id": "Q034",
+    "query": "Who can authorize an emergency change during a critical service incident?",
+    "relevant_chunk_ids": [
+      "DOC-007-P001-C001"
+    ],
+    "category": "paraphrase",
+    "is_answerable": true
+  },
+  {
+    "query_id": "Q035",
+    "query": "What encryption protections apply to confidential and restricted information?",
+    "relevant_chunk_ids": [
+      "DOC-008-P001-C000",
+      "DOC-008-P001-C001"
+    ],
+    "category": "multi_document",
+    "is_answerable": true
+  },
+  {
+    "query_id": "Q036",
+    "query": "What must be in place before data can be transferred to an external processor?",
+    "relevant_chunk_ids": [
+      "DOC-008-P001-C001"
+    ],
+    "category": "paraphrase",
+    "is_answerable": true
+  },
+  {
+    "query_id": "Q037",
+    "query": "What approvals are required for privileged access and for notifying customers about a personal-data breach?",
+    "relevant_chunk_ids": [
+      "DOC-005-P001-C001",
+      "DOC-006-P001-C002"
+    ],
+    "category": "multi_document",
+    "is_answerable": true
+  },
+  {
+    "query_id": "Q038",
+    "query": "How long must access reviews be performed and how frequently?",
+    "relevant_chunk_ids": [
+      "DOC-005-P001-C001"
+    ],
+    "category": "temporal",
+    "is_answerable": true
   }
 ]
