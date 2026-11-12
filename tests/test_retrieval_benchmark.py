@@ -26,6 +26,7 @@ def test_run_retrieval_benchmark_returns_metrics() -> None:
     assert result.precision_at_k == 0.0
     assert result.mrr == 0.0
     assert result.ndcg_at_k == 0.0
+    assert result.category_metrics == {"paraphrase": result.category_metrics["paraphrase"]}
 
 
 def test_run_retrieval_benchmark_calculates_metrics() -> None:
@@ -65,6 +66,7 @@ def test_run_retrieval_benchmark_returns_per_query_results() -> None:
     assert len(result.query_results) == 1
     query_result = result.query_results[0]
     assert query_result.query_id == "Q001"
+    assert query_result.category == "paraphrase"
     assert query_result.retrieved_chunk_ids == ["DOC-003-P001-C000"]
     assert query_result.relevant_chunk_ids == {"DOC-003-P001-C000"}
     assert query_result.recall_at_k == 1.0
@@ -122,6 +124,40 @@ def test_run_retrieval_benchmark_rejects_empty_retrieved_ids() -> None:
         )
 
 
+def test_category_metrics_are_aggregated_independently() -> None:
+    queries = load_benchmark_queries(EXPANDED_DATASET_PATH)
+    relevant_by_query = {
+        query.query_id: query.relevant_chunk_ids[0]
+        for query in queries
+        if query.is_answerable
+    }
+
+    def retriever(query: str, top_k: int) -> list[str]:
+        benchmark_query = next(item for item in queries if item.query == query)
+        relevant_id = relevant_by_query[benchmark_query.query_id]
+        return [relevant_id] if benchmark_query.category == "temporal" else ["wrong-chunk"]
+
+    result = run_retrieval_benchmark(queries, retriever, top_k=5)
+
+    temporal = result.category_metrics["temporal"]
+    paraphrase = result.category_metrics["paraphrase"]
+    assert temporal.query_count == 5
+    assert temporal.recall_at_k == 1.0
+    assert temporal.mrr == 1.0
+    assert paraphrase.query_count == 9
+    assert paraphrase.recall_at_k == 0.0
+    assert paraphrase.mrr == 0.0
+    assert sum(item.query_count for item in result.category_metrics.values()) == 24
+
+
+def test_category_metrics_exclude_unanswerable_queries() -> None:
+    queries = load_benchmark_queries(EXPANDED_DATASET_PATH)
+    result = run_retrieval_benchmark(queries, lambda query, top_k: [], top_k=5)
+
+    assert "unanswerable" not in result.category_metrics
+    assert sum(item.query_count for item in result.category_metrics.values()) == 24
+
+
 def test_unanswerable_queries_are_excluded_from_retrieval_metrics() -> None:
     queries = load_benchmark_queries(EXPANDED_DATASET_PATH)
     calls: list[str] = []
@@ -160,6 +196,7 @@ def test_all_unanswerable_queries_produce_empty_retrieval_metrics() -> None:
     assert result.answerable_query_count == 0
     assert result.unanswerable_query_count == 1
     assert result.query_results == []
+    assert result.category_metrics == {}
     assert result.recall_at_k == 0.0
     assert result.precision_at_k == 0.0
     assert result.mrr == 0.0
