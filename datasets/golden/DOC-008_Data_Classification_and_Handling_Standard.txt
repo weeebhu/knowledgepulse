@@ -1,0 +1,12 @@
+Data Classification and Handling Standard
+Document ID: DOC-008
+Version: 2.2
+Effective date: 2026-04-05
+
+Information assets are classified as Public, Internal, Confidential, or Restricted by the designated data owner. The classification must be recorded in the system inventory and reviewed at least annually or when the business purpose changes. Data owners are responsible for approving access based on job role and business need.
+
+Confidential and Restricted data must be encrypted in transit using approved TLS configurations and encrypted at rest using organization-managed keys. Restricted data exports require documented data-owner approval and must be logged. Production datasets containing personal information must not be copied to development or test environments unless the Data Protection Officer approves a documented masking or tokenization plan.
+
+Data shared with an external processor requires an approved data-processing agreement and a security review before transfer. The data owner must specify the permitted purpose, retention period, and deletion requirements. External processors must confirm deletion at the end of the approved retention period.
+
+Records must be retained according to the applicable records schedule. When a retention period expires, the data owner authorizes secure deletion unless a legal hold applies. Legal holds suspend deletion until Legal provides written release.
