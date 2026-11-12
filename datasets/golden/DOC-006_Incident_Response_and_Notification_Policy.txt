@@ -1,0 +1,12 @@
+Incident Response and Notification Policy
+Document ID: DOC-006
+Version: 1.4
+Effective date: 2026-03-01
+
+Employees must report suspected security incidents to the security operations center immediately using the incident hotline or the approved incident portal. The on-call incident commander classifies the event by severity and appoints an incident lead. High-severity incidents require an incident bridge to be opened within 15 minutes of classification.
+
+The incident lead maintains the incident timeline, records containment decisions, and coordinates technical responders. Evidence must be preserved in the approved case repository with timestamps and access controls. Responders must not delete affected logs or rebuild compromised systems before evidence preservation has been confirmed by the incident lead.
+
+The communications lead coordinates external notifications with Legal and the Data Protection Officer. A suspected personal-data breach must be escalated to Legal and the Data Protection Officer within one hour of discovery. Any notification to customers, regulators, or partners requires approval from Legal and the designated executive incident sponsor. The incident commander records the approval and notification timestamps in the incident record.
+
+A post-incident review must be completed within five business days after service restoration. The review records root cause, customer impact, response timeline, corrective actions, owners, and due dates. Corrective actions are tracked until verified complete by the incident commander.
